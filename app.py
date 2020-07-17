@@ -2,8 +2,10 @@ from flask import Flask, request, Response
 import json
 from utils import generate_api_key
 import random
-
+import threading
 from apiGenHandler import apiGenHandler
+
+lock = threading.Lock()
 handler = apiGenHandler()
 
 app = Flask(__name__)
@@ -36,7 +38,8 @@ def apikey():
         return Response(response=json.dumps(resp), status=code)
 
     if request.method == 'GET':
-        key = handler.get_available_api_key()
+        with lock:
+            key = handler.get_available_api_key()
         resp = {}
         code = 200
         resp["message"] = "Success"
@@ -46,6 +49,7 @@ def apikey():
             code = 404
         return Response(response=json.dumps(resp), status=code)
 
+
 @app.route('/key/del/<apikey>', methods=['DELETE'])
 def delete_apikey(apikey):
     """API route to delete the given keys
@@ -54,7 +58,8 @@ def delete_apikey(apikey):
         DELETE: O(lgn)
     """
     if request.method == 'DELETE':
-        stat = handler.delete_api_key(apikey)
+        with lock:
+            stat = handler.delete_api_key(apikey)
         resp = {}
         code = 200
         resp["message"] = "Success"
@@ -94,3 +99,6 @@ def apikey_poll(key):
         resp["message"] = "Failed"
         code = 404
     return Response(response=json.dumps(resp), status=code)
+
+if __name__ == '__main__':
+    app.run(threaded=True)
