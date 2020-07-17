@@ -16,7 +16,7 @@ def welcome():
     return Response(response=json.dumps(resp), status=200)
 
 
-@app.route('/key', methods=['GET', 'POST', 'DELETE'])
+@app.route('/key', methods=['GET', 'POST'])
 def apikey():
     """API route to generate keys for POST request and provide 
     avaliable keys for GET request
@@ -46,8 +46,15 @@ def apikey():
             code = 404
         return Response(response=json.dumps(resp), status=code)
 
+@app.route('/key/del/<apikey>', methods=['DELETE'])
+def delete_apikey(apikey):
+    """API route to delete the given keys
+
+    Time Complexity:
+        DELETE: O(lgn)
+    """
     if request.method == 'DELETE':
-        stat = handler.delete_api_key()
+        stat = handler.delete_api_key(apikey)
         resp = {}
         code = 200
         resp["message"] = "Success"
@@ -75,7 +82,7 @@ def apikey_unblock(key):
 
 @app.route('/key/poll/<key>', methods=['POST'])
 def apikey_poll(key):
-    """API route to unblock the given API key
+    """API route to poll for extending the API key expiry
     Time Complexity:
         POST: O(lgn)
     """

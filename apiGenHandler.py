@@ -8,6 +8,8 @@ from datetime import datetime, timedelta
 
 
 class apiGenHandler:
+    """Class represents API key handler"""
+
     keys = {}
     active_count = 0
     blocked_queue = SortedKeyList([], key=lambda value: value["ts"].time())
@@ -17,6 +19,11 @@ class apiGenHandler:
         pass
 
     def gen_api_key(self):
+        """Function to return a unique API key
+
+        Time Complexity: O(log(n)) - n is the number of keys
+        Return: True if it is successful else None
+        """
         ret = None
         try:
             api_key = generate_api_key()
@@ -35,6 +42,11 @@ class apiGenHandler:
         return ret
 
     def get_available_api_key(self):
+        """Function to return unblocked key
+
+        Time Complexity: O(log(n)) - n is the number of keys
+        Return: API Key if it is successful else None
+        """
         c = self.active_count
         if c == 0:
             return None
@@ -65,6 +77,11 @@ class apiGenHandler:
         return ret
 
     def unblock_api_key(self, key):
+        """Function to unblocked key
+
+        Time Complexity: O(log(n)) - n is the number of keys
+        Return: True Key if it is successful else None
+        """
         ret = None
         try:
             if self.keys[key]["state"] == 1:
@@ -82,6 +99,11 @@ class apiGenHandler:
         return ret
 
     def delete_api_key(self, key):
+        """Function to delete an API key
+
+        Time Complexity: O(log(n)) - n is the number of keys
+        Return: True Key if it is successful else None
+        """
         ret = None
         try:
             if self.keys[key]["state"] == 1:
@@ -97,6 +119,11 @@ class apiGenHandler:
         return ret
 
     def poll_api_key(self, key):
+        """Function to poll to extend API Key expiry by 5 minutes
+
+        Time Complexity: O(log(n)) - n is the number of keys
+        Return: True Key if it is successful else None
+        """
         try:
             time_stamp = self.keys[key]["ts"]
             ts = self.keys[key]["ts"]
@@ -110,6 +137,11 @@ class apiGenHandler:
         return True
 
     def kill_api(self):
+        """Function run by a seperate thread delete expired API keys
+        Once started this keeps running unless any interruption
+
+        Time Complexity: O(log(n)) - n is the number of keys
+        """
         while True:
             try:
                 api_key = self.blocked_queue[0]
