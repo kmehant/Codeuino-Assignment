@@ -1,12 +1,20 @@
 # API Key handler as part of Codeuino LF Mentorship Assignment
 A simple python server written using Flask framework, to handle API keys as per 
-requirements stated in the assignment document
+requirements stated in the assignment document. I was able to achieve this in **O(lgn)** 😁
 
 Code has doc strings and relevant comments explaining different modules
 
 **Problem 2:** I have curated few implementation ideas for the Donut project. Here is the [Link](https://docs.google.com/document/d/1m5z3cI0M4NvnPgRABnV-bbk80kosjz6ZD7HwWwtKzSw/edit?usp=sharing)
 
 <hr>
+
+## What is in here 🤔
+1. Design
+   1. Data Structures
+   2. Functions
+2. Setup
+3. API
+4. Tests
 
 ## Design
 
@@ -148,5 +156,9 @@ Request POST /key/poll/<key>
 description:
 To poll to server for the given API key which extends expiry time by 5 minutes
 ```
-
+Tests
+```
+pytest test.py
+```
+![](./Screenshot%202020-07-17%20at%208.10.22%20PM.png)
 
