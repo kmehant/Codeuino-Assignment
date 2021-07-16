@@ -96,7 +96,7 @@ This function is run by the Daemon thread `kill-thread` which will be in infinte
 
 Clone the repository
 ```
-$ git clone https://github.com/kmehant/Codeuino-Assignment.git
+$ git clone https://github.com/kmehant/API-Key-Handler-Python.git
 ```
 
 Install python modules
