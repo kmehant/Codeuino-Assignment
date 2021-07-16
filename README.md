@@ -1,4 +1,4 @@
-# API Key handler as part of Codeuino LF Mentorship Assignment
+# API Key handler
 A simple python server written using Flask framework, to handle API keys as per 
 requirements stated in the assignment document. I was able to achieve this in **O(lgn)** 😁
 
